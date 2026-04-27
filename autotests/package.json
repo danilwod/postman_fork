@@ -1,0 +1,12 @@
+{
+  "name": "pe4king-autotests",
+  "version": "1.0.0",
+  "description": "Autotests for Pe4King",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest",
+    "@types/node": "^25.6.0"
+  }
+}
