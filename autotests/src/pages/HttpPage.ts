@@ -19,12 +19,19 @@ export class HttpPage {
     this.page = page;
 
     // Инициализация локаторов
-    this.newCollectionInput = page.getByPlaceholder('Новая коллекция...');
+    this.newCollectionInput = page.getByPlaceholder('Новая коллекция');
     this.emptyCollectionText = page.getByText('Нет запросов');
 
-    this.methodDropdown = page.getByText('GET'); 
-    this.urlInput = page.getByPlaceholder('https://api.example.com/v1/endpoint');
-    this.sendBtn = page.getByRole('button', { name: 'Send' });
-    this.responseEmptyPlaceholder = page.getByText('Response will appear here');
+    // Метод - может быть GET, POST и т.д.
+    this.methodDropdown = page.getByText('GET');
+    
+    // URL input - используем более общий placeholder
+    this.urlInput = page.locator('input[placeholder*="api"], input[placeholder*="http"], input[type="url"], input[class*="url"]').first();
+    
+    // Кнопка Send
+    this.sendBtn = page.getByRole('button', { name: /Send|Отправить/i });
+    
+    // Placeholder ответа
+    this.responseEmptyPlaceholder = page.getByText(/Response|Ответ|empty/i);
   }
 }

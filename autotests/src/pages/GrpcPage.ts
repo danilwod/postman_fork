@@ -6,14 +6,25 @@ export class GrpcPage {
   readonly tlsCheckbox: Locator;
   readonly sendBtn: Locator;
   readonly bodyTab: Locator;
-  readonly jsonEditor: Locator; // Поле ввода JSON
+  readonly jsonEditor: Locator;
 
   constructor(page: Page) {
-    this.loadProtoBtn = page.getByText('Load .proto');
-    this.addressInput = page.getByPlaceholder('localhost:50051'); // или getByText, зависит от реализации
-    this.tlsCheckbox = page.getByLabel('TLS'); // Если это чекбокс
-    this.sendBtn = page.getByRole('button', { name: 'Send' });
-    this.bodyTab = page.getByText('Body', { exact: true });
-    this.jsonEditor = page.locator('.json-editor-class'); // Тут придется поискать через Инспектор
+    // Кнопка загрузки .proto файла
+    this.loadProtoBtn = page.getByRole('button', { name: /Load|\.proto|Прото/i });
+    
+    // Поле ввода адреса сервера
+    this.addressInput = page.locator('input[placeholder*="localhost"], input[placeholder*="50051"], input[type="text"]').first();
+    
+    // TLS чекбокс
+    this.tlsCheckbox = page.locator('input[type="checkbox"], [role="checkbox"], label:has-text("TLS")').first();
+    
+    // Кнопка отправки
+    this.sendBtn = page.getByRole('button', { name: /Send|Отправить/i });
+    
+    // Вкладка Body
+    this.bodyTab = page.getByText('Body');
+    
+    // JSON редактор - используем разные варианты
+    this.jsonEditor = page.locator('[class*="json"], [class*="editor"], textarea, pre[contenteditable="true"]').first();
   }
 }

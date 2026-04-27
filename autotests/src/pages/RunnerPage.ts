@@ -6,9 +6,13 @@ export class RunnerPage {
   readonly runBtn: Locator;
 
   constructor(page: Page) {
-    // В Инспекторе найди этот выпадающий список
-    this.collectionDropdown = page.locator('.collection-select-class'); 
-    this.iterationsInput = page.locator('input[type="number"]').first(); // Пример
-    this.runBtn = page.getByRole('button', { name: 'Запустить' });
+    // Выпадающий список коллекций - используем разные варианты
+    this.collectionDropdown = page.locator('select, [role="combobox"], [class*="select"], [class*="dropdown"], input[role="combobox"]').first();
+    
+    // Поле ввода итераций - используем более общие селекторы
+    this.iterationsInput = page.locator('input[type="number"], input[placeholder*="iteration"], input[placeholder*="Iteration"], input[placeholder*="Итерации"]').first();
+    
+    // Кнопка запуска - используем разные варианты названия
+    this.runBtn = page.getByRole('button', { name: /Запустить|Run|Start|Execute/i });
   }
 }
